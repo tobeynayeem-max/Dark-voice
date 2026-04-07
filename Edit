@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dark Voice Pro</title>
+</head>
+<body style="background:black;color:white;text-align:center;">
+
+<h1>🎙️ Dark Voice Pro</h1>
+
+<textarea id="text" rows="5" cols="40" placeholder="Write anything..."></textarea>
+<br><br>
+
+<select id="voices"></select>
+<br><br>
+
+<button onclick="speak()">🔊 Speak</button>
+
+<script>
+let voices = [];
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+  let select = document.getElementById("voices");
+
+  voices.forEach((voice, i) => {
+    let option = document.createElement("option");
+    option.value = i;
+    option.text = voice.name + " (" + voice.lang + ")";
+    select.appendChild(option);
+  });
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+
+function speak() {
+  let text = document.getElementById("text").value;
+  let selectedVoice = document.getElementById("voices").value;
+
+  let speech = new SpeechSynthesisUtterance(text);
+  speech.voice = voices[selectedVoice];
+
+  speech.rate = 1;   // speed
+  speech.pitch = 1;  // tone
+
+  speechSynthesis.speak(speech);
+}
+</script>
+
+</body>
+</html>
