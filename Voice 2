@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dark Voice</title>
+</head>
+<body style="background:black;color:white;text-align:center;">
+
+<h1>🎙️ Dark Voice</h1>
+
+<textarea id="text" rows="5" cols="40" placeholder="Type any language..."></textarea>
+<br><br>
+
+<button onclick="speak()">🔊 Speak</button>
+
+<script>
+function speak() {
+  let text = document.getElementById("text").value;
+
+  let speech = new SpeechSynthesisUtterance(text);
+
+  // Auto language detect (browser tries)
+  speech.lang = "auto";
+
+  window.speechSynthesis.speak(speech);
+}
+</script>
+
+</body>
+</html>
