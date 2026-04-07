@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dark Voice Auto</title>
+</head>
+<body style="background:black;color:white;text-align:center;">
+
+<h1>🎙️ Dark Voice Auto</h1>
+
+<textarea id="text" rows="5" cols="40" placeholder="Type anything..."></textarea>
+
+<script>
+let timeout;
+
+document.getElementById("text").addEventListener("input", function() {
+  
+  // আগের voice বন্ধ করবে
+  speechSynthesis.cancel();
+
+  // typing থামার পর 1 সেকেন্ড অপেক্ষা করবে
+  clearTimeout(timeout);
+
+  timeout = setTimeout(() => {
+    let text = document.getElementById("text").value;
+
+    if(text.trim() !== "") {
+      let speech = new SpeechSynthesisUtterance(text);
+
+      speech.lang = "en-US"; // চাইলে change করতে পারো
+      speech.rate = 1;
+      speech.pitch = 1;
+
+      speechSynthesis.speak(speech);
+    }
+  }, 1000); // 1 second delay
+});
+</script>
+
+</body>
+</html>
