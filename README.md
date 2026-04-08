@@ -54,3 +54,86 @@ https://yourname.github.io/dark-voice
       data-text="auto"
       data-voice="af_bella">
 </script>জ
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dark Voice</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+      padding: 50px;
+    }
+
+    textarea {
+      width: 80%;
+      height: 120px;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: white;
+      cursor: pointer;
+    }
+
+    select {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎤 Dark Voice</h1>
+  <p>Write anything and convert to voice</p>
+
+  <textarea id="text" placeholder="Type something..."></textarea><br>
+
+  <select id="voiceSelect"></select><br>
+
+  <button onclick="speak()">🔊 Convert to Voice</button>
+
+  <script src="script.js"></script>
+</body>
+</html>let voices = [];
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+  let voiceSelect = document.getElementById("voiceSelect");
+
+  voiceSelect.innerHTML = "";
+
+  voices.forEach((voice, i) => {
+    let option = document.createElement("option");
+    option.value = i;
+    option.textContent = voice.name + " (" + voice.lang + ")";
+    voiceSelect.appendChild(option);
+  });
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+
+function speak() {
+  let text = document.getElementById("text").value;
+  let selectedVoice = document.getElementById("voiceSelect").value;
+
+  let msg = new SpeechSynthesisUtterance();
+  msg.text = text;
+  msg.voice = voices[selectedVoice];
+  msg.rate = 1;
+  msg.pitch = 1;
+
+  speechSynthesis.speak(msg);
+}
