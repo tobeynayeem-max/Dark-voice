@@ -173,3 +173,16 @@ function speak() {
   speechSynthesis.speak(utterance);
 }
 </script>
+<!-- SEO META TAG -->
+<title>Dark Voice AI - Bangla Voice Generator</title>
+
+<meta name="description" content="Dark Voice AI website যেখানে আপনি লেখা দিলে voice হয়ে যাবে। Bangla deep voice generator.">
+
+<meta name="keywords" content="dark voice, bangla voice generator, text to speech bangla, AI voice">
+
+<meta name="author" content="Dark Voice">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google indexing -->
+<meta name="robots" content="index, follow">
