@@ -101,80 +101,45 @@ function speak() {
 <meta charset="UTF-8">
 <title>Dark Voice AI</title>
 
-<style>
-body {
-  margin: 0;
-  display: flex;
-  background: #0f0f0f;
-  color: white;
-  font-family: Arial;
+
+<script>
+let voices = [];
+let selectedType = "male";
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+
+function setVoice(type) {
+  selectedType = type;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 200px;
-  background: #1a1a1a;
-  padding: 20px;
+function speak() {
+  let text = document.getElementById("text").value;
+
+  // 🔥 Text improve (pause + smooth voice)
+  text = text.replace(/\./g, ". ").replace(/,/g, ", ");
+
+  let utterance = new SpeechSynthesisUtterance(text);
+
+  // 🎛️ Voice settings (IMPORTANT)
+  utterance.rate = 0.9;   // slow = smooth
+  utterance.pitch = selectedType === "male" ? 0.7 : 1.2;
+  utterance.volume = 1;
+
+  // 🔊 Best voice select logic
+  let bestVoice = voices.find(v =>
+    selectedType === "male"
+      ? v.name.toLowerCase().includes("male") || v.lang.includes("en")
+      : v.name.toLowerCase().includes("female")
+  );
+
+  if (!bestVoice) bestVoice = voices[0];
+
+  utterance.voice = bestVoice;
+
+  speechSynthesis.cancel(); // old voice stop
+  speechSynthesis.speak(utterance);
 }
-
-.sidebar h2 {
-  color: #00ffcc;
-}
-
-.sidebar button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.male {
-  background: #0077ff;
-}
-
-.female {
-  background: #ff0077;
-}
-
-/* Main */
-.main {
-  flex: 1;
-  padding: 40px;
-  text-align: center;
-}
-
-textarea {
-  width: 80%;
-  height: 150px;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 16px;
-}
-
-button.speak {
-  margin-top: 20px;
-  padding: 15px;
-  font-size: 18px;
-  background: #00ffcc;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div class="sidebar">
-  <h2>Voice Type</h2>
-
-  <button class="male" onclick="setVoice('male')">Male Voice</button>
-  <button class="female" onclick="setVoice('female')">Female Voice</button>
-</div>
-
-<div class="main">
-  <h1>🎤 Dark Voice AI</h1>
-
-  <textarea id="text" placeholder="Type something...
+</script>
