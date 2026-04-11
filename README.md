@@ -194,3 +194,75 @@ function speak() {
   </url>
 </urlset><h1>Dark Voice AI - Bangla Voice Generator</h1>
 <p>Write anything and convert it into realistic voice.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dark Voice AI Pro</title>
+
+<style>
+body {
+  background: #0f0f0f;
+  color: white;
+  text-align: center;
+  font-family: Arial;
+  padding: 50px;
+}
+
+textarea {
+  width: 80%;
+  height: 150px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+button {
+  padding: 15px;
+  margin-top: 20px;
+  background: #00ffcc;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 Dark Voice AI (11Labs Style)</h1>
+
+<textarea id="text" placeholder="Write something..."></textarea>
+<br>
+
+<button onclick="generateVoice()">🎤 Generate Voice</button>
+
+<audio id="audio" controls></audio>
+
+<script>
+async function generateVoice() {
+  let text = document.getElementById("text").value;
+
+  const response = await fetch("https://api.elevenlabs.io/v1/text-to-speech/YOUR_VOICE_ID", {
+    method: "POST",
+    headers: {
+      "xi-api-key": "YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      text: text,
+      model_id: "eleven_multilingual_v2",
+      voice_settings: {
+        stability: 0.5,
+        similarity_boost: 0.8
+      }
+    })
+  });
+
+  const audioBlob = await response.blob();
+  const audioUrl = URL.createObjectURL(audioBlob);
+
+  document.getElementById("audio").src = audioUrl;
+}
+</script>
+
+</body>
+</html>
