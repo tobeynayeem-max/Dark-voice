@@ -143,3 +143,33 @@ function speak() {
   speechSynthesis.speak(utterance);
 }
 </script>
+<script>
+let voices = [];
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+
+function speak() {
+  let text = document.getElementById("text").value;
+
+  let utterance = new SpeechSynthesisUtterance(text);
+
+  // 🔥 BEST SETTINGS
+  utterance.rate = 0.85;   // slow = smooth
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  // 🔥 BEST VOICE PICK (IMPORTANT)
+  let bestVoice =
+    voices.find(v => v.lang === "en-US") ||
+    voices.find(v => v.lang.includes("en")) ||
+    voices[0];
+
+  utterance.voice = bestVoice;
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utterance);
+}
+</script>
