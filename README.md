@@ -186,3 +186,11 @@ function speak() {
 
 <!-- Google indexing -->
 <meta name="robots" content="index, follow">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://yourwebsite.com/</loc>
+    <priority>1.0</priority>
+  </url>
+</urlset><h1>Dark Voice AI - Bangla Voice Generator</h1>
+<p>Write anything and convert it into realistic voice.</p>
